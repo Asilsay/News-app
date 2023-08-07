@@ -1,15 +1,13 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-
+import withReactContent from 'sweetalert2-react-content';
 import { Typography, Row, Col } from 'antd';
 
-import LayoutComp from '../components/LayoutComp';
-// import Cards from '../components/Cards';
-import withReactContent from 'sweetalert2-react-content';
-import swal from '../../data/utils/swal';
-import { NewsItem } from '../../data/types/newsType';
-import api from '../../domain/api/api';
 import useCategoryStore from '../../domain/store/categoryNews';
+import { NewsItem } from '../../data/types/newsType';
+import LayoutComp from '../components/LayoutComp';
 import LoadingAll from '../components/LoadingAll';
+import swal from '../../data/utils/swal';
+import api from '../../domain/api/api';
 
 const Cards = lazy(() => import('../components/Cards'));
 
@@ -72,12 +70,7 @@ function Homepage() {
                     lg={6}
                     style={{ display: 'flex', marginBottom: '12px' }}
                   >
-                    <Cards
-                      title={news.title}
-                      description={news.description}
-                      imageUrl={news.urlToImage}
-                      url={news.url}
-                    />
+                    <Cards newsItem={news} />
                   </Col>
                 ))}
               </Row>

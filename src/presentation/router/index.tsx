@@ -1,11 +1,11 @@
-import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
 import ScrollToTop from '../components/ScrollToTop';
 import LoadingAll from '../components/LoadingAll';
 
-const Homepage = lazy(() => import('../pages/Homepage'));
 const DetailNews = lazy(() => import('../pages/DetailNews'));
+const Homepage = lazy(() => import('../pages/Homepage'));
 
 function Router() {
   return (

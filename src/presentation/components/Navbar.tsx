@@ -1,9 +1,10 @@
+import { Link, useParams } from 'react-router-dom';
+import { blue } from '@ant-design/colors';
 import { FC, useState } from 'react';
 import { Layout, Menu } from 'antd';
-import logoNav from '../assets/logoNavbar.svg';
-import { blue } from '@ant-design/colors';
+
 import useCategoryStore from '../../domain/store/categoryNews';
-import { Link } from 'react-router-dom';
+import logoNav from '../assets/logoNavbar.svg';
 
 const { Header } = Layout;
 
@@ -55,6 +56,7 @@ const items: ItemType[] = [
 ];
 
 const Navbar: FC = () => {
+  const { detail } = useParams();
   const [current, setCurrent] = useState<string>('general');
 
   const setSelectedCategory = useCategoryStore(
@@ -80,20 +82,24 @@ const Navbar: FC = () => {
           style={{ display: 'flex', alignItems: 'center' }}
         />
       </Link>
-      <Menu
-        style={menuStyle}
-        mode="horizontal"
-        defaultSelectedKeys={['general']}
-        selectedKeys={[current]}
-        onClick={(event) => {
-          const selectedCategory = event.key;
-          handleCategoryChange(selectedCategory);
-        }}
-        items={items.map((item: ItemType) => ({
-          key: item.key,
-          label: item.label,
-        }))}
-      />
+      {detail ? (
+        <></>
+      ) : (
+        <Menu
+          style={menuStyle}
+          mode="horizontal"
+          defaultSelectedKeys={['general']}
+          selectedKeys={[current]}
+          onClick={(event) => {
+            const selectedCategory = event.key;
+            handleCategoryChange(selectedCategory);
+          }}
+          items={items.map((item: ItemType) => ({
+            key: item.key,
+            label: item.label,
+          }))}
+        />
+      )}
     </Header>
   );
 };

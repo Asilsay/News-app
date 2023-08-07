@@ -1,7 +1,7 @@
+import { blue } from '@ant-design/colors';
 import React, { FC } from 'react';
 import { Layout } from 'antd';
 import Navbar from './Navbar';
-import { blue } from '@ant-design/colors';
 
 const { Content } = Layout;
 
