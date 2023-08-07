@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import ScrollToTop from '../components/ScrollToTop';
+import LoadingAll from '../components/LoadingAll';
 
 const Homepage = lazy(() => import('../pages/Homepage'));
 const DetailNews = lazy(() => import('../pages/DetailNews'));
@@ -10,7 +11,7 @@ function Router() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Suspense fallback={'...'}>
+      <Suspense fallback={<LoadingAll />}>
         <Routes>
           <Route
             path="/"

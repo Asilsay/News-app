@@ -5,7 +5,7 @@ import { blue } from '@ant-design/colors';
 
 const { Content } = Layout;
 
-interface LayoutCompType {
+interface LayoutCompProps {
   children: React.ReactNode;
 }
 
@@ -17,7 +17,7 @@ const contentStyle: React.CSSProperties = {
   marginTop: '-64px',
 };
 
-const LayoutComp: FC<LayoutCompType> = ({ children }) => {
+const LayoutComp: FC<LayoutCompProps> = ({ children }) => {
   return (
     <Layout className="layout">
       <Navbar />
