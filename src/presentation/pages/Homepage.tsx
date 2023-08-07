@@ -1,12 +1,18 @@
 import { useState } from 'react';
-import reactLogo from '../../assets/react.svg';
+import reactLogo from '../assets/react.svg';
 import viteLogo from '/vite.svg';
+import { Typography } from 'antd';
+
+import LayoutComp from '../components/LayoutComp';
+
+const { Title } = Typography;
 
 function Routes() {
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <LayoutComp>
+      <Title style={{ textAlign: 'center' }}>NEWS</Title>
       <div>
         <a
           href="https://vitejs.dev"
@@ -41,7 +47,7 @@ function Routes() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </LayoutComp>
   );
 }
 
