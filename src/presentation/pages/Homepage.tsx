@@ -4,26 +4,36 @@ import { Typography, Row, Col } from 'antd';
 
 import LayoutComp from '../components/LayoutComp';
 import Cards from '../components/Cards';
-import axios from 'axios';
+import withReactContent from 'sweetalert2-react-content';
+import swal from '../../data/utils/swal';
+import { NewsItem } from '../../data/types/newsType';
+import api from '../../domain/api/api';
 
 const { Title } = Typography;
 
 function Routes() {
-  const [newsData, setNewsData] = useState<any[]>([]);
+  const [newsData, setNewsData] = useState<NewsItem[]>([]);
+  const MySwal = withReactContent(swal);
+
+  const fetchDatas = async () => {
+    await api
+      .GetTop('general')
+      .then((response) => {
+        const { articles } = response.data;
+        setNewsData(articles);
+      })
+      .catch((error) => {
+        MySwal.fire({
+          icon: 'error',
+          title: 'Failed',
+          text: `error :  ${error.message}`,
+          showCancelButton: false,
+        });
+      });
+  };
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await axios.get(
-          'https://newsapi.org/v2/top-headlines?country=us&apiKey=099867b8163745758c89742fda5d895e'
-        );
-        setNewsData(response.data.articles);
-      } catch (error) {
-        console.error('Error fetching news:', error);
-      }
-    };
-
-    fetchNews();
+    fetchDatas();
   }, []);
 
   return (
