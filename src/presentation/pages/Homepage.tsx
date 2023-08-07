@@ -1,48 +1,92 @@
-import { useState } from 'react';
-import reactLogo from '../../assets/react.svg';
-import viteLogo from '/vite.svg';
+import { Suspense, lazy, useEffect, useState } from 'react';
 
-function Routes() {
-  const [count, setCount] = useState(0);
+import { Typography, Row, Col } from 'antd';
+
+import LayoutComp from '../components/LayoutComp';
+// import Cards from '../components/Cards';
+import withReactContent from 'sweetalert2-react-content';
+import swal from '../../data/utils/swal';
+import { NewsItem } from '../../data/types/newsType';
+import api from '../../domain/api/api';
+import useCategoryStore from '../../domain/store/categoryNews';
+import LoadingAll from '../components/LoadingAll';
+
+const Cards = lazy(() => import('../components/Cards'));
+
+const { Title } = Typography;
+
+function Homepage() {
+  const [newsData, setNewsData] = useState<NewsItem[]>([]);
+  const MySwal = withReactContent(swal);
+  const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+  const [load, setLoad] = useState<boolean>(false);
+
+  const fetchDatas = async () => {
+    setLoad(true);
+    await api
+      .GetTop(selectedCategory)
+      .then((response) => {
+        const { articles } = response.data;
+        setNewsData(articles);
+      })
+      .catch((error) => {
+        MySwal.fire({
+          icon: 'error',
+          title: 'Failed',
+          text: `error :  ${error.message}`,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoad(false));
+  };
+
+  useEffect(() => {
+    fetchDatas();
+  }, [selectedCategory]);
 
   return (
-    <>
-      <div>
-        <a
-          href="https://vitejs.dev"
-          target="_blank"
-        >
-          <img
-            src={viteLogo}
-            className="logo"
-            alt="Vite logo"
-          />
-        </a>
-        <a
-          href="https://react.dev"
-          target="_blank"
-        >
-          <img
-            src={reactLogo}
-            className="logo react"
-            alt="React logo"
-          />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/Routes.tsx</code> and save to test HMR scacasc
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <LayoutComp>
+      {load ? (
+        <LoadingAll />
+      ) : (
+        <>
+          <Title
+            style={{
+              textAlign: 'center',
+              textTransform: 'uppercase',
+              margin: '30px 0',
+            }}
+          >
+            NEWS {selectedCategory !== 'general' ? selectedCategory : ''}
+          </Title>
+
+          <div>
+            <Suspense fallback={<LoadingAll />}>
+              <Row gutter={[16, 16]}>
+                {newsData.map((news, index) => (
+                  <Col
+                    key={index}
+                    xs={24}
+                    sm={12}
+                    md={8}
+                    lg={6}
+                    style={{ display: 'flex', marginBottom: '12px' }}
+                  >
+                    <Cards
+                      title={news.title}
+                      description={news.description}
+                      imageUrl={news.urlToImage}
+                      url={news.url}
+                    />
+                  </Col>
+                ))}
+              </Row>
+            </Suspense>
+          </div>
+        </>
+      )}
+    </LayoutComp>
   );
 }
 
-export default Routes;
+export default Homepage;
