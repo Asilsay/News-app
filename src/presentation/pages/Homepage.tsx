@@ -11,7 +11,7 @@ import api from '../../domain/api/api';
 
 const { Title } = Typography;
 
-function Routes() {
+function Homepage() {
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
   const MySwal = withReactContent(swal);
 
@@ -40,7 +40,7 @@ function Routes() {
     <LayoutComp>
       <Title style={{ textAlign: 'center' }}>NEWS</Title>
 
-      <div className="site-layout-content">
+      <div>
         <Row gutter={[16, 16]}>
           {newsData.map((news, index) => (
             <Col
@@ -65,4 +65,4 @@ function Routes() {
   );
 }
 
-export default Routes;
+export default Homepage;

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Layout, Menu } from 'antd';
+import type { MenuProps } from 'antd';
 import logoNav from '../assets/logoNavbar.svg';
 import { blue } from '@ant-design/colors';
 
@@ -10,16 +11,42 @@ const headerStyle: React.CSSProperties = {
   justifyContent: 'space-between',
   alignItems: 'center',
   minHeight: '32px',
-  backgroundColor: blue[5],
+  backgroundColor: blue[10],
   zIndex: '99',
   position: 'sticky',
   top: '0',
 };
 
 const menuStyle: React.CSSProperties = {
+  display: 'flex',
+  justifyContent: 'end',
   backgroundColor: 'inherit',
+  width: '50%',
   color: '#fff',
 };
+
+const items: MenuProps['items'] = [
+  {
+    label: 'Business',
+    key: 'business',
+  },
+  {
+    label: 'Health',
+    key: 'health',
+  },
+  {
+    label: 'Science',
+    key: 'science',
+  },
+  {
+    label: 'Sports',
+    key: 'sports',
+  },
+  {
+    label: 'Technology',
+    key: 'technology',
+  },
+];
 
 const Navbar: FC = () => {
   return (
@@ -34,14 +61,8 @@ const Navbar: FC = () => {
       <Menu
         style={menuStyle}
         mode="horizontal"
-        defaultSelectedKeys={['1']}
-        items={new Array(3).fill(null).map((_, index) => {
-          const key = index + 1;
-          return {
-            key,
-            label: `nav ${key}`,
-          };
-        })}
+        defaultSelectedKeys={['science']}
+        items={items}
       />
     </Header>
   );

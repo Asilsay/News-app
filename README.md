@@ -54,6 +54,7 @@ This command will launch the development server and open the application in your
 - [React](https://react.dev/) to build component-based user interfaces.
 - [Vite](https://vitejs.dev/) for the development environment.
 - [Axios](https://axios-http.com/) to make http requests.
+- [ant Design](https://ant.design/) for CSS formating.
 - [React Router](https://reactrouter.com/en/main) for routing.
 
 ## Contributing
