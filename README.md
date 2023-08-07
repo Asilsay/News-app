@@ -8,6 +8,7 @@ Project Test for PT. Eigen Tri Mathema
 - [Installation](#installation)
 - [Usage](#usage)
 - [Languages & Tools](#languages--tools)
+- [Useful Links](#useful-links)
 - [Contributing](#contributing)
 - [Author](#author)
 
@@ -56,6 +57,10 @@ This command will launch the development server and open the application in your
 - [Axios](https://axios-http.com/) to make http requests.
 - [ant Design](https://ant.design/) for CSS formating.
 - [React Router](https://reactrouter.com/en/main) for routing.
+
+## Useful Links
+
+- Deploy : [Vercel](https://news-app-tes-coding.vercel.app/)
 
 ## Contributing
 
