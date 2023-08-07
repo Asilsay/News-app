@@ -1,10 +1,16 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Layout, Menu } from 'antd';
-import type { MenuProps } from 'antd';
 import logoNav from '../assets/logoNavbar.svg';
 import { blue } from '@ant-design/colors';
+import useCategoryStore from '../../domain/store/categoryNews';
+import { Link } from 'react-router-dom';
 
 const { Header } = Layout;
+
+interface ItemType {
+  key: string;
+  label: string;
+}
 
 const headerStyle: React.CSSProperties = {
   display: 'flex',
@@ -25,7 +31,7 @@ const menuStyle: React.CSSProperties = {
   color: '#fff',
 };
 
-const items: MenuProps['items'] = [
+const items: ItemType[] = [
   {
     label: 'Business',
     key: 'business',
@@ -49,20 +55,44 @@ const items: MenuProps['items'] = [
 ];
 
 const Navbar: FC = () => {
+  const [current, setCurrent] = useState<string>('general');
+
+  const setSelectedCategory = useCategoryStore(
+    (state) => state.setSelectedCategory
+  );
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrent(category);
+  };
+
   return (
     <Header style={headerStyle}>
-      <div>
+      <Link
+        to={'/'}
+        onClick={() => {
+          handleCategoryChange('general');
+        }}
+      >
         <img
           src={logoNav}
           alt="logo-news-app"
           style={{ display: 'flex', alignItems: 'center' }}
         />
-      </div>
+      </Link>
       <Menu
         style={menuStyle}
         mode="horizontal"
-        defaultSelectedKeys={['science']}
-        items={items}
+        defaultSelectedKeys={['general']}
+        selectedKeys={[current]}
+        onClick={(event) => {
+          const selectedCategory = event.key;
+          handleCategoryChange(selectedCategory);
+        }}
+        items={items.map((item: ItemType) => ({
+          key: item.key,
+          label: item.label,
+        }))}
       />
     </Header>
   );
