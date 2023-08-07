@@ -1,7 +1,7 @@
-import { FC } from 'react';
-import { Space, Spin } from 'antd';
-import { blue } from '@ant-design/colors';
 import { LoadingOutlined } from '@ant-design/icons';
+import { blue } from '@ant-design/colors';
+import { Space, Spin } from 'antd';
+import { FC } from 'react';
 
 const antIcon = (
   <LoadingOutlined
